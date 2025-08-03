@@ -1,5 +1,6 @@
 sealed class Content {
   final String hint;
+
   const Content({required this.hint});
 }
 
@@ -13,5 +14,6 @@ class TextContent extends Content {
 
 class SelectableContent extends Content {
   final List<String> items;
+
   SelectableContent(this.items, {required super.hint});
 }

@@ -12,5 +12,6 @@ class TextValidation extends InputValidation {
 
 class FileValidation extends InputValidation {
   final int size;
+
   FileValidation({required this.size});
 }
