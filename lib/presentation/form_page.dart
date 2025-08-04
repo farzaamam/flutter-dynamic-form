@@ -21,13 +21,13 @@ class _FormPageState extends ConsumerState<FormPage> {
   Widget build(BuildContext context) {
     final formState = ref.watch(formControllerProvider);
     final controller = ref.read(formControllerProvider.notifier);
-    final isSubmitting = controller.isSubmitting;
+    final isSubmitting = formState.isSubmitting;
 
     return Scaffold(
       appBar: AppBar(title: const Text('Dynamic Form')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: formState.when(
+        child: formState.fields.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (e, _) => _buildErrorState(e, controller),
           data: (fields) => _buildForm(fields, controller, isSubmitting),
@@ -120,7 +120,7 @@ class _FormPageState extends ConsumerState<FormPage> {
     if (field is FileInputField) {
       return FileFieldWidget(
         field: field,
-        onSaved:
+        onChanged:
             (uploadedFile) => controller.updateFile(field.title, uploadedFile),
       );
     }
@@ -138,7 +138,7 @@ class _FormPageState extends ConsumerState<FormPage> {
           Text('Failed to load form: $error'),
           const SizedBox(height: 8),
           ElevatedButton(
-            onPressed: controller.load,
+            onPressed: controller.reload(),
             child: const Text('Retry'),
           ),
         ],

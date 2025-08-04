@@ -1,22 +1,22 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dynamic_form/di/global_providers.dart';
 import 'package:flutter_dynamic_form/domain/form_repository.dart';
 import 'package:flutter_dynamic_form/domain/models/form_input_field_models.dart';
-import 'package:flutter_dynamic_form/presentation/widgets/file_field_widget.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final formControllerProvider =
-    StateNotifierProvider<FormController, AsyncValue<List<InputField>>>((ref) {
+    StateNotifierProvider<FormController, FormPageState>((ref) {
       final formRepository = ref.watch(formRepositoryProvider);
-
       return FormController(formRepository);
     });
 
-class FormController extends StateNotifier<AsyncValue<List<InputField>>> {
+class FormController extends StateNotifier<FormPageState> {
   final FormRepository formRepository;
 
-  FormController(this.formRepository) : super(const AsyncLoading()) {
+  FormController(this.formRepository)
+    : super(FormPageState(fields: const AsyncLoading())) {
     _init();
   }
 
@@ -25,28 +25,24 @@ class FormController extends StateNotifier<AsyncValue<List<InputField>>> {
   }
 
   Future<void> _load() async {
-    state = const AsyncLoading();
+    state = state.copyWith(fields: AsyncValue.loading());
     try {
       final forms = await formRepository.getForms();
-      state = AsyncValue.data(forms);
+      state = state.copyWith(fields: AsyncValue.data(forms));
     } catch (e, st) {
-      state = AsyncValue.error(e, st);
+      state = state.copyWith(fields: AsyncValue.error(e, st));
       debugPrint('Failed to load: $e\n$st');
     }
   }
-  load(){}
 
-  bool isSubmitting = false;
-  final Map<String, dynamic> fieldValues = {};
-  final Map<String, UploadedFile?> files = {};
-
-  // Other existing members...
+  final Map<String, String> fieldValues = {};
+  final Map<String, File> files = {};
 
   void updateFieldValue(String title, dynamic value) {
     fieldValues[title] = value;
   }
 
-  void updateFile(String title, UploadedFile? file) {
+  void updateFile(String title, File? file) {
     if (file != null) {
       files[title] = file;
     } else {
@@ -55,16 +51,32 @@ class FormController extends StateNotifier<AsyncValue<List<InputField>>> {
   }
 
   Future<void> submit() async {
-    isSubmitting = true;
+    state = state.copyWith(isSubmitting: true);
     try {
-
-    } catch (e,s) {
-      print("dfesfdrgvdrv $s : $e");
-
-      rethrow;
+      await formRepository.submitForm(fieldValues, files);
     } finally {
-      isSubmitting = false;
+      state = state.copyWith(isSubmitting: false);
     }
   }
 
+  reload() {
+    _load();
+  }
+}
+
+class FormPageState {
+  final AsyncValue<List<InputField>> fields;
+  final bool isSubmitting;
+
+  FormPageState({required this.fields, this.isSubmitting = false});
+
+  FormPageState copyWith({
+    AsyncValue<List<InputField>>? fields,
+    bool? isSubmitting,
+  }) {
+    return FormPageState(
+      fields: fields ?? this.fields,
+      isSubmitting: isSubmitting ?? this.isSubmitting,
+    );
+  }
 }

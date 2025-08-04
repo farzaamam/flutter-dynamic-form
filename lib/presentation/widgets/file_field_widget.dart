@@ -1,33 +1,17 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dynamic_form/domain/models/form_input_field_models.dart';
 
-class UploadedFile {
-  final String fieldName;
-  final String filename;
-  final Uint8List bytes;
-
-  UploadedFile({
-    required this.fieldName,
-    required this.filename,
-    required this.bytes,
-  });
-}
-
 class FileFieldWidget extends StatefulWidget {
   final FileInputField field;
-  final void Function(UploadedFile?) onSaved;
-  final void Function(UploadedFile?)? onChanged;
-
-  final UploadedFile? initialFile;
+  final void Function(File?) onChanged;
 
   const FileFieldWidget({
     required this.field,
-    required this.onSaved,
-    this.onChanged,
-    this.initialFile,
+    required this.onChanged,
     super.key,
   });
 
@@ -36,12 +20,11 @@ class FileFieldWidget extends StatefulWidget {
 }
 
 class _FileFieldWidgetState extends State<FileFieldWidget> {
-  UploadedFile? _picked;
+  PlatformFile? _picked;
 
   @override
   void initState() {
     super.initState();
-    _picked = widget.initialFile;
   }
 
   Future<void> _pickFile() async {
@@ -56,23 +39,19 @@ class _FileFieldWidgetState extends State<FileFieldWidget> {
     if (result == null || result.files.isEmpty) return;
 
     final file = result.files.first;
-    if (file.bytes == null) return;
-    final uploaded = UploadedFile(
-      fieldName: widget.field.title,
-      filename: file.name,
-      bytes: file.bytes!,
-    );
+
+    if (file.path == null) return;
+
     setState(() {
-      _picked = uploaded;
+      _picked = file;
     });
-    widget.onChanged?.call(_picked);
+    widget.onChanged.call(File(file.path!));
   }
 
   @override
   Widget build(BuildContext context) {
-    return FormField<UploadedFile?>(
-      initialValue: _picked,
-      onSaved: (_) => widget.onSaved(_picked),
+    return FormField<PlatformFile>(
+      onSaved: (_) => widget.onChanged(File(_picked!.path!)),
       validator: (value) {
         if (widget.field.isRequired && (value == null)) {
           return 'Required';
@@ -80,7 +59,7 @@ class _FileFieldWidgetState extends State<FileFieldWidget> {
         return null;
       },
       builder: (state) {
-        final current = state.value ?? _picked;
+        final current = state.value;
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -111,7 +90,7 @@ class _FileFieldWidgetState extends State<FileFieldWidget> {
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    current?.filename ?? 'No file selected',
+                    current?.name ?? 'No file selected',
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
