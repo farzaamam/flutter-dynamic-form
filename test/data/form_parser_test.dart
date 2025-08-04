@@ -94,7 +94,7 @@ void main() {
       expect(fileField.title, 'Upload:');
       expect(fileField.isRequired, isFalse);
       expect(fileField.content.hint, 'Select image');
-      expect(fileField.fileValidation.maxSize, 7.5);
+      expect(fileField.fileValidation.format, 'jpg');
     });
 
     test('throws on unsupported field type', () {
@@ -196,7 +196,7 @@ void main() {
 
       final images = fields[3] as FileInputField;
       expect(images.title, 'تصاویر ماشین:');
-      expect(images.fileValidation.maxSize, 5);
+      expect(images.fileValidation.format, 'jpg');
     });
   });
 }

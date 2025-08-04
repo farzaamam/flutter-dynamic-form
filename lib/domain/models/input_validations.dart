@@ -11,7 +11,7 @@ class TextValidation extends InputValidation {
 }
 
 class FileValidation extends InputValidation {
-  final double maxSize;
+  final String format;
 
-  FileValidation({required this.maxSize});
+  FileValidation({required this.format});
 }

@@ -15,7 +15,7 @@ const String sampleFormJson = '''
       "title": "مدل:",
       "isRequired": true,
       "content": { "hint": "مدل ماشین را وارد کنید" },
-      "validation": { "minLen": 1, "maxLen": 40, "type": "plain" }
+      "validation": { "minLen": 1, "maxLen": 4, "type": "plain" }
     },
     {
       "id": 3,
@@ -23,7 +23,7 @@ const String sampleFormJson = '''
       "title": "نوع سوخت:",
       "isRequired": true,
       "content": {
-        "hint": "",
+        "hint": "Select",
         "items": [
           { "id": 1, "label": "بنزین" },
           { "id": 2, "label": "گاز" },
@@ -37,8 +37,8 @@ const String sampleFormJson = '''
       "type": "file",
       "title": "تصاویر ماشین:",
       "isRequired": false,
-      "content": { "hint": "پذیرش عکس", "multiple": true },
-      "validation": { "maxSizeMB": 5 }
+      "content": { "hint": "پذیرش عکس" },
+      "validation": { "allowedType": "jpg" }
     }
   ]
 }

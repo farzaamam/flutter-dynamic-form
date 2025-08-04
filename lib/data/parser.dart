@@ -81,7 +81,7 @@ class FormParser {
         validationMap['maxLen'] != null
             ? (validationMap['maxLen'] as num).toInt()
             : null;
-    final rawType = (validationMap['type'] as String) ;
+    final rawType = (validationMap['type'] as String);
     final validationType = _mapTextValidationType(rawType);
 
     return TextInputField(
@@ -100,7 +100,7 @@ class FormParser {
     required Map<String, dynamic> contentMap,
   }) {
     final hint = contentMap['hint'] as String;
-    final itemsRaw = (contentMap['items'] as List<dynamic>) ;
+    final itemsRaw = (contentMap['items'] as List<dynamic>);
 
     final items =
         itemsRaw.whereType<Map<String, dynamic>>().map((it) {
@@ -125,14 +125,11 @@ class FormParser {
     required Map<String, dynamic> validationMap,
   }) {
     final hint = contentMap['hint'] as String;
-    final double maxSize =
-        validationMap['maxSizeMB'] != null
-            ? (validationMap['maxSizeMB'] as num).toDouble()
-            : 0.0;
+    final String fileType = validationMap['allowedType'] as String;
 
     return FileInputField(
       FileContent(hint: hint),
-      FileValidation(maxSize: maxSize),
+      FileValidation(format: fileType),
       id: id,
       title: title,
       isRequired: isRequired,
