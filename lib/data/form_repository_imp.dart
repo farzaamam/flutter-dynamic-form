@@ -19,6 +19,6 @@ class FormRepositoryImp extends FormRepository {
     Map<String, String> fieldValues,
     Map<String, File> files,
   ) async {
-    formDataSource.submitData(fieldValues, files);
+    await formDataSource.submitData(fieldValues, files);
   }
 }

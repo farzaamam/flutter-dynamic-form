@@ -16,5 +16,8 @@ class FormDataSource {
     return formParser.parseFromJsonString(sampleFormJson);
   }
 
-  submitData(Map<String, String> fieldValues, Map<String, File> files) {}
+  submitData(Map<String, String> fieldValues, Map<String, File> files) async {
+    // Simulate network request
+    await Future.delayed(const Duration(milliseconds: 2000));
+  }
 }
