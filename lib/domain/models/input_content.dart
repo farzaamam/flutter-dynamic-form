@@ -13,7 +13,14 @@ class TextContent extends Content {
 }
 
 class SelectableContent extends Content {
-  final List<String> items;
+  final List<SelectableItem> items;
 
   SelectableContent(this.items, {required super.hint});
+}
+
+class SelectableItem {
+  final int id;
+  final String item;
+
+  SelectableItem({required this.id, required this.item});
 }

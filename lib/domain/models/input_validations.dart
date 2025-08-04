@@ -1,6 +1,6 @@
 sealed class InputValidation {}
 
-enum TextInputValidationType { number, email, phone, other }
+enum TextInputValidationType { number, email, phone, plain }
 
 class TextValidation extends InputValidation {
   final int? minLen;
@@ -11,7 +11,7 @@ class TextValidation extends InputValidation {
 }
 
 class FileValidation extends InputValidation {
-  final int size;
+  final double maxSize;
 
-  FileValidation({required this.size});
+  FileValidation({required this.maxSize});
 }
