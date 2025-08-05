@@ -8,20 +8,20 @@ It fetches form schemas from a data source (e.g., a remote API or a local JSON f
 
 
 # 🧠 Design Principles
-Clean Architecture: The project is structured with a clear separation of concerns, dividing the code into domain, data, and presentation layers. This enhances maintainability and testability.
+Clean Architecture: The project is structured with a clear separation of concerns, dividing the code into `domain`, `data`, and `presentation` layers. This enhances maintainability and testability.
 
-Decoupled Logic: The core form generation logic is not tied to any specific data source. You can easily switch the implementation of the `FormDataSource` interface to fetch data from a different source without altering the rest of the application.
+Decoupled Logic: The core form generation logic is not tied to any specific data source. You can easily switch the implementation of the `FormDataSource` class to fetch data from a different source without altering the rest of the application.
 
 # 🧩 Key Classes and Their Roles
 Class Roles:
 
-`InputField`:	An abstract base class defining common attributes for all form fields (id, title, isRequired, inputType). Concrete subclasses like TextInputField, SelectInputField, and FileInputField handle specific input types.
+`InputField`:	An abstract base class defining common attributes for all form fields (id, title, isRequired, inputType). Concrete subclasses like `TextInputField`, `SelectInputField`, and `FileInputField` handle specific input types.
 
-`FormController`:	A StateNotifier that manages the UI state of the form, including loading, success, or error states. It also holds the current list of fields and exposes a reload() method to refresh the form state.
+`FormController`:	A StateNotifier that manages the UI state of the form, including loading, success, or error states. It also holds the current list of fields and handles submission.
 
-`FormRepository`:	Acts as a bridge between the data layer and the application logic. It uses a FormDataSource to retrieve the form schema and parses it into usable InputField models.
+`FormRepository`:	Acts as a bridge between the data layer and the application logic. It uses a `FormDataSource` to retrieve the form schema and parses it into usable `InputField` models.
 
-`FormDataSource`:	Handles the logic for retrieving and submitting form data. It uses a parser to convert raw JSON into the appropriate input models, abstracting away the data source details.
+`FormDataSource`:	Handles the logic for retrieving and submitting form data. It uses a parser to convert JSON into the appropriate input models, abstracting away the data source details.
 # 🧪 Testing Strategy
 The project includes testing suite to ensure reliability and correctness.
 
