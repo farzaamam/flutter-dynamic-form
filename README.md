@@ -27,13 +27,13 @@ The project includes testing suite to ensure reliability and correctness.
 
 # ✅ Unit Tests
 
-form_parser_test.dart: Validates the parsing logic that maps raw data (e.g., JSON) to the InputField Dart objects. This ensures that the data models are correctly created from the source.
+`form_parser_test.dart`: Validates the parsing logic that maps raw data (e.g., JSON) to the InputField Dart objects. This ensures that the data models are correctly created from the source.
 
-form_controller_test.dart: Confirms that the FormController correctly manages and updates its state in response to actions like reload(), ensuring the UI state is always accurate.
+`form_controller_test.dart`: Confirms that the FormController correctly manages and updates its state in response to actions like reload(), ensuring the UI state is always accurate.
 
 # 🔁 Integration Test
 
-fetch_form_process_integration_test.dart: This test simulates the end-to-end process of fetching form data. It uses a mocked data source to verify that the entire flow—from the repository fetching data to the controller updating its state with the correct form fields—works as expected.
+`fetch_form_process_integration_test.dart`: This test simulates the end-to-end process of fetching form data. It uses a mocked data source to verify that the entire flow—from the repository fetching data to the controller updating its state with the correct form fields—works as expected.
 
 # 🛠️ Highlights
 State Management: Utilizes StateNotifier for clean and reactive state management.
@@ -41,4 +41,8 @@ State Management: Utilizes StateNotifier for clean and reactive state management
 Polymorphism: Supports multiple input types (text, file, select, etc.) through polymorphic `InputField` subclasses.
 
 Testability: Designed to be highly testable, allowing for easy mocking of data sources and controllers.
+
+# 🎥 Screenshots
+ <img src="screenshots/formSubmission.jpeg" alt="Task Detail" height="400"/>
+ <img src="screenshots/formValidation.jpeg" alt="Task Detail" height="400"/>
 
