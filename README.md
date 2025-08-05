@@ -3,19 +3,21 @@
 A dynamic form builder for Flutter that generates forms from remote or local data, designed with clean architecture principles.
 
 # 🚀 Purpose
-This project provides a robust solution for dynamically building and rendering Flutter forms. It fetches form schemas from a data source (e.g., a remote API or a local JSON file) and constructs the corresponding UI widgets. The architecture ensures that the logic for form generation is highly scalable, testable, and decoupled from the data source, making it easy to adapt to various backend systems.
+This project provides a robust solution for dynamically building and rendering Flutter forms. 
+It fetches form schemas from a data source (e.g., a remote API or a local JSON file) and constructs the corresponding UI widgets. The architecture ensures that the logic for form generation is highly scalable, testable, and decoupled from the data source, making it easy to adapt to various backend systems.
+
 
 # 🧠 Design Principles
 Clean Architecture: The project is structured with a clear separation of concerns, dividing the code into domain, data, and presentation layers. This enhances maintainability and testability.
 
-Decoupled Logic: The core form generation logic is not tied to any specific data source. You can easily switch the implementation of the FormDataSource interface to fetch data from a different source without altering the rest of the application.
+Decoupled Logic: The core form generation logic is not tied to any specific data source. You can easily switch the implementation of the `FormDataSource` interface to fetch data from a different source without altering the rest of the application.
 
 # 🧩 Key Classes and Their Roles
 Class	Role
-InputField	An abstract base class defining common attributes for all form fields (id, title, isRequired, inputType). Concrete subclasses like TextInputField, SelectInputField, and FileInputField handle specific input types.
-FormController	A StateNotifier that manages the UI state of the form, including loading, success, or error states. It also holds the current list of fields and exposes a reload() method to refresh the form state.
-FormRepository	Acts as a bridge between the data layer and the application logic. It uses a FormDataSource to retrieve the form schema and parses it into usable InputField models.
-FormDataSource	Handles the logic for retrieving and submitting form data. It uses a parser to convert raw JSON into the appropriate input models, abstracting away the data source details.
+`InputField`:	An abstract base class defining common attributes for all form fields (id, title, isRequired, inputType). Concrete subclasses like TextInputField, SelectInputField, and FileInputField handle specific input types.
+`FormController`:	A StateNotifier that manages the UI state of the form, including loading, success, or error states. It also holds the current list of fields and exposes a reload() method to refresh the form state.
+`FormRepository`:	Acts as a bridge between the data layer and the application logic. It uses a FormDataSource to retrieve the form schema and parses it into usable InputField models.
+`FormDataSource`:	Handles the logic for retrieving and submitting form data. It uses a parser to convert raw JSON into the appropriate input models, abstracting away the data source details.
 # 🧪 Testing Strategy
 The project includes testing suite to ensure reliability and correctness.
 
@@ -32,7 +34,7 @@ fetch_form_process_integration_test.dart: This test simulates the end-to-end pro
 # 🛠️ Highlights
 State Management: Utilizes StateNotifier for clean and reactive state management.
 
-Polymorphism: Supports multiple input types (text, file, select, etc.) through polymorphic InputField subclasses.
+Polymorphism: Supports multiple input types (text, file, select, etc.) through polymorphic `InputField` subclasses.
 
 Testability: Designed to be highly testable, allowing for easy mocking of data sources and controllers.
 
