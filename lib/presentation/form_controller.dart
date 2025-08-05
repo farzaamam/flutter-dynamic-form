@@ -42,7 +42,7 @@ class FormController extends StateNotifier<FormPageState> {
     fieldValues[title] = value;
   }
 
-  void updateFile(String title, File? file) {
+  void updateUploadingFile(String title, File? file) {
     if (file != null) {
       files[title] = file;
     } else {

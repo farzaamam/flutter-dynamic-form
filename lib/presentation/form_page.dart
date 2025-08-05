@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_dynamic_form/domain/models/form_input_field_models.dart';
 import 'package:flutter_dynamic_form/presentation/form_controller.dart';
@@ -121,7 +120,7 @@ class _FormPageState extends ConsumerState<FormPage> {
       return FileFieldWidget(
         field: field,
         onChanged:
-            (uploadedFile) => controller.updateFile(field.title, uploadedFile),
+            (uploadedFile) => controller.updateUploadingFile(field.title, uploadedFile),
       );
     }
 

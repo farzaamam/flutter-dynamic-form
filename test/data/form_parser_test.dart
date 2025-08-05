@@ -79,7 +79,7 @@ void main() {
         'title': 'Upload:',
         'isRequired': false,
         'content': {'hint': 'Select image'},
-        'validation': {'maxSizeMB': 7.5},
+        'validation': {'allowedType': 'jpg'},
       };
 
       final fields = parser.parseFromMap({
@@ -160,7 +160,7 @@ void main() {
           "title": "تصاویر ماشین:",
           "isRequired": false,
           "content": { "hint": "پذیرش عکس", "multiple": true },
-          "validation": { "maxSizeMB": 5 }
+          "validation": { "allowedType": "jpg" }
         }
       ]
     }
