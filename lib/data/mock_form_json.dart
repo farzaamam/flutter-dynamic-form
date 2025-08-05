@@ -4,40 +4,40 @@ const String sampleFormJson = '''
     {
       "id": 1,
       "type": "text",
-      "title": "برند:",
+      "title": "Brand:",
       "isRequired": true,
-      "content": { "hint": "برند ماشین را وارد کنید" },
+      "content": { "hint": "Enter the car brand" },
       "validation": { "minLen": 2, "maxLen": 30, "type": "plain" }
     },
     {
       "id": 2,
       "type": "text",
-      "title": "مدل:",
+      "title": "Model:",
       "isRequired": true,
-      "content": { "hint": "مدل ماشین را وارد کنید" },
+      "content": { "hint": "Enter the car model" },
       "validation": { "minLen": 1, "maxLen": 4, "type": "plain" }
     },
     {
       "id": 3,
       "type": "select",
-      "title": "نوع سوخت:",
+      "title": "Fuel Type:",
       "isRequired": true,
       "content": {
         "hint": "Select",
         "items": [
-          { "id": 1, "label": "بنزین" },
-          { "id": 2, "label": "گاز" },
-          { "id": 3, "label": "دیزل" },
-          { "id": 4, "label": "الکتریکی" }
+          { "id": 1, "label": "Gasoline" },
+          { "id": 2, "label": "Gas" },
+          { "id": 3, "label": "Diesel" },
+          { "id": 4, "label": "Electric" }
         ]
       }
     },
     {
       "id": 4,
       "type": "file",
-      "title": "تصاویر ماشین:",
+      "title": "Car Images:",
       "isRequired": false,
-      "content": { "hint": "پذیرش عکس" },
+      "content": { "hint": "Accept image" },
       "validation": { "allowedType": "jpg" }
     }
   ]
