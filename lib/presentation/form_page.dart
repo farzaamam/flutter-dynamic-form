@@ -52,52 +52,51 @@ class _FormPageState extends ConsumerState<FormPage> {
               ),
             ),
             const SizedBox(height: 24),
-            ElevatedButton(
-              onPressed:
-                  isSubmitting
-                      ? null
-                      : () async {
-                        if (!_formKey.currentState!.validate()) return;
-                        _formKey.currentState!.save();
-                        try {
-                          await controller.submit();
-                          if (!mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Submitted successfully'),
-                            ),
-                          );
-                        } catch (e) {
-                          if (!mounted) return;
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Submit failed: $e')),
-                          );
-                        }
-                      },
-              style: ElevatedButton.styleFrom(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 14,
-                  horizontal: 32,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12),
-                ),
-              ),
-              child:
-                  isSubmitting
-                      ? const SizedBox(
-                        width: 20,
-                        height: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.white,
-                        ),
-                      )
-                      : const Text('Submit'),
-            ),
+            _buildSubmitButton(controller, isSubmitting),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildSubmitButton(FormController controller, bool isSubmitting) {
+    return ElevatedButton(
+      onPressed:
+          isSubmitting
+              ? null
+              : () async {
+                if (!_formKey.currentState!.validate()) return;
+                _formKey.currentState!.save();
+
+                try {
+                  await controller.submit();
+                  if (!mounted) return;
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Submitted successfully')),
+                  );
+                } catch (e) {
+                  if (!mounted) return;
+                  ScaffoldMessenger.of(
+                    context,
+                  ).showSnackBar(SnackBar(content: Text('Submit failed: $e')));
+                }
+              },
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 32),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+      ),
+      child:
+          isSubmitting
+              ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: Colors.white,
+                ),
+              )
+              : const Text('Submit'),
     );
   }
 
@@ -120,7 +119,8 @@ class _FormPageState extends ConsumerState<FormPage> {
       return FileFieldWidget(
         field: field,
         onChanged:
-            (uploadedFile) => controller.updateUploadingFile(field.title, uploadedFile),
+            (uploadedFile) =>
+                controller.updateUploadingFile(field.title, uploadedFile),
       );
     }
 

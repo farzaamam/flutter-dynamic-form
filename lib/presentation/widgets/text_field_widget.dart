@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dynamic_form/domain/models/form_input_field_models.dart';
 import 'package:flutter_dynamic_form/domain/models/input_validations.dart';
+import 'package:flutter_dynamic_form/presentation/direction_helper.dart';
 
 class TextFieldWidget extends StatefulWidget {
   final TextInputField field;
@@ -57,31 +58,36 @@ class _TextFieldWidgetState extends State<TextFieldWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          widget.field.title,
-          style: const TextStyle(fontWeight: FontWeight.w600),
-        ),
-        const SizedBox(height: 4),
-        TextFormField(
-          controller: _controller,
-          decoration: InputDecoration(
-            hintText: widget.field.content.hint,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
-            contentPadding: const EdgeInsets.symmetric(
-              horizontal: 12,
-              vertical: 14,
-            ),
+    return Directionality(
+      textDirection: getDirection(widget.field.title),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.field.title,
+            style: const TextStyle(fontWeight: FontWeight.w600),
           ),
-          keyboardType: _getKeyboardType(),
-          validator: _validator,
-          onChanged: (text) => widget.onSaved(_controller.text),
-          onSaved: (_) => widget.onSaved(_controller.text),
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-        ),
-      ],
+          const SizedBox(height: 4),
+          TextFormField(
+            controller: _controller,
+            decoration: InputDecoration(
+              hintText: widget.field.content.hint,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 12,
+                vertical: 14,
+              ),
+            ),
+            keyboardType: _getKeyboardType(),
+            validator: _validator,
+            onChanged: (text) => widget.onSaved(_controller.text),
+            onSaved: (_) => widget.onSaved(_controller.text),
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+          ),
+        ],
+      ),
     );
   }
 
