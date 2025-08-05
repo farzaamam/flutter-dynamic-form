@@ -1,46 +1,38 @@
-Dynamic Form Builder
-============
 
-## Task Description
+# Dynamic Flutter Form Builder
+A dynamic form builder for Flutter that generates forms from remote or local data, designed with clean architecture principles.
 
-We want to build a dynamic form builder in Flutter that fetches its structure from a server and displays it on a page. The form will include three input types:
+# # 🚀 Purpose
+This project provides a robust solution for dynamically building and rendering Flutter forms. It fetches form schemas from a data source (e.g., a remote API or a local JSON file) and constructs the corresponding UI widgets. The architecture ensures that the logic for form generation is highly scalable, testable, and decoupled from the data source, making it easy to adapt to various backend systems.
 
-- Text input
-- Select box
-- File upload field
+# # 🧠 Design Principles
+Clean Architecture: The project is structured with a clear separation of concerns, dividing the code into domain, data, and presentation layers. This enhances maintainability and testability.
 
-## Key Steps:
+Decoupled Logic: The core form generation logic is not tied to any specific data source. You can easily switch the implementation of the FormDataSource interface to fetch data from a different source without altering the rest of the application.
 
-1. API Request: Send a request to retrieve the form structure from the server, which includes field types, labels, options, and validation rules.
+# # 🧩 Key Classes and Their Roles
+Class	Role
+InputField	An abstract base class defining common attributes for all form fields (id, title, isRequired, inputType). Concrete subclasses like TextInputField, SelectInputField, and FileInputField handle specific input types.
+FormController	A StateNotifier that manages the UI state of the form, including loading, success, or error states. It also holds the current list of fields and exposes a reload() method to refresh the form state.
+FormRepository	Acts as a bridge between the data layer and the application logic. It uses a FormDataSource to retrieve the form schema and parses it into usable InputField models.
+FormDataSource	Handles the logic for retrieving and submitting form data. It uses a parser to convert raw JSON into the appropriate input models, abstracting away the data source details.
+# # 🧪 Testing Strategy
+The project includes testing suite to ensure reliability and correctness.
 
-2. Render the Form: Dynamically generate the form on the page based on the retrieved structure, creating the appropriate input fields (text, select, and file fields).
+# # ✅ Unit Tests
 
-3. Submit Button: Add a submit button that collects all form data (including file uploads) when clicked.
+form_parser_test.dart: Validates the parsing logic that maps raw data (e.g., JSON) to the InputField Dart objects. This ensures that the data models are correctly created from the source.
 
-4. Form Validation: Ensure that all required fields are filled out and meet validation rules (e.g., text length, required selections, file formats) before allowing submission.
+form_controller_test.dart: Confirms that the FormController correctly manages and updates its state in response to actions like reload(), ensuring the UI state is always accurate.
 
-5. Send Form Data: Once submitted, package and send the form data back to the server via another API call.
+# # 🔁 Integration Test
 
-This approach allows for flexible forms that can be easily updated server-side without modifying the app’s code.
+fetch_form_process_integration_test.dart: This test simulates the end-to-end process of fetching form data. It uses a mocked data source to verify that the entire flow—from the repository fetching data to the controller updating its state with the correct form fields—works as expected.
 
+# 🛠️ Highlights
+State Management: Utilizes StateNotifier for clean and reactive state management.
 
-Sample response for getting form (Feel free to restructure the response if you think it would enhance clarity or effectiveness):
+Polymorphism: Supports multiple input types (text, file, select, etc.) through polymorphic InputField subclasses.
 
-```
-{"fields":[{"label":"برند:","name":"brand","props":{"color":"#000000","placeholder":"برند ماشین را وارد کنید","size":"large","type":"text"},"style":{"borderRadius":"5px","margin":"10px 0","padding":"8px"},"type":"input"},{"label":"مدل:","name":"model","props":{"color":"#000000","placeholder":"مدل ماشین را وارد کنید","size":"medium","type":"text"},"style":{"borderRadius":"5px","margin":"10px 0","padding":"8px"},"type":"input"},{"label":"سال ساخت:","name":"year","props":{"max":"2024","min":"1900","placeholder":"سال ساخت را وارد کنید","type":"number"},"style":{"borderRadius":"5px","margin":"10px 0","padding":"8px"},"type":"input"},{"label":"نوع سوخت:","name":"fuel_type","props":{"options":[{"label":"بنزین","value":"بنزین"},{"label":"گاز","value":"گاز"},{"label":"دیزل","value":"دیزل"},{"label":"الکتریکی","value":"الکتریکی"}]},"style":{"borderRadius":"5px","margin":"10px 0","padding":"8px"},"type":"select"},{"label":"رنگ ماشین:","name":"color","props":{"placeholder":"رنگ ماشین را وارد کنید","type":"text"},"style":{"borderRadius":"5px","margin":"10px 0","padding":"8px"},"type":"input"},{"label":"تعداد مالکین قبلی:","name":"previous_owners","props":{"min":"0","placeholder":"تعداد مالکین قبلی را وارد کنید","type":"number"},"style":{"borderRadius":"5px","margin":"10px 0","padding":"8px"},"type":"input"},{"label":"توضیحات وضعیت فنی:","name":"technical_condition","props":{"cols":50,"placeholder":"توضیحات درباره وضعیت فنی ماشین","rows":4},"style":{"borderRadius":"5px","margin":"10px 0","padding":"10px"},"type":"textarea"},{"label":"تصاویر ماشین:","name":"car_images","props":{"accept":"image/*","maxSize":"5MB","multiple":true},"style":{"margin":"10px 0"},"type":"file"}]}
-```
+Testability: Designed to be highly testable, allowing for easy mocking of data sources and controllers.
 
-Suppose the backend APIs are concurrently in the development process. So mock APIs in some way clean to continue your work.
-
-
-## Implementation details
-
-
-Try to write your code as **reusable** and **readable** as possible. The architecture of your code and where you integrate your design system within the project are important to us.
-
-Also, don't forget to **document your code** and clear the reasons for all your decisions in the code.
-
-It is more valuable to us that the project comes with unit tests.
-
-Please fork this repository and add your code to that. Don't forget that your commits are so important.
-So be sure that you're committing your code often with a proper commit message.
