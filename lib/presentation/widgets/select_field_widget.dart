@@ -18,8 +18,8 @@ class SelectFieldWidget extends StatelessWidget {
           hintText: field.content.hint,
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
           contentPadding: const EdgeInsets.symmetric(
-            horizontal: 12,
-            vertical: 12,
+            horizontal: 20,
+            vertical: 20,
           ),
         ),
         validator: (v) {
